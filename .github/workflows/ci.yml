@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: write   # needed to publish releases on tags
+
+jobs:
+  test-and-build:
+    # The client talks to the game through the Windows API (ctypes.WinDLL), so tests run on Windows.
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Offline smoke test (no game, no Archipelago install)
+        run: python tests/offline_smoke_test.py
+
+      - name: Build apworld and release package
+        run: python build_apworld.py --release
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: beyond-good-and-evil-archipelago
+          path: |
+            dist/bge.apworld
+            dist/*.zip
+
+      - name: Publish GitHub release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/bge.apworld
+            dist/*.zip
+          generate_release_notes: true

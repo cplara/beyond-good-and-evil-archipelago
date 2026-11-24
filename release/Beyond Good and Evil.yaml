@@ -1,0 +1,10 @@
+# Beyond Good and Evil - Archipelago player options
+# Put this file in Archipelago's "Players" folder (or give it to the person generating the multiworld).
+
+name: Jade            # your slot name (max 16 characters, must be unique in the multiworld)
+game: Beyond Good and Evil
+description: Beyond Good and Evil player
+
+Beyond Good and Evil:
+  # Send and receive deaths with other DeathLink players.
+  death_link: false

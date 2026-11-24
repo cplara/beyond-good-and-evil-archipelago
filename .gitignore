@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+
+# Salidas de build y herramientas
+dist/
+*.apworld
+
+# Nunca subir archivos del juego ni partidas
+*.sav
+*.sav.backup
+*.bf
+*.idx
+*.exe
+*.dll
+checks.log
